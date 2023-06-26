@@ -1,0 +1,2 @@
+1) Rancher chart of kamaji should alert cert-manager pre-req.
+2) Rancher chart is installing kamaji under default namespace.
