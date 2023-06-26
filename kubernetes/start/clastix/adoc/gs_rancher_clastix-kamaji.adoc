@@ -43,15 +43,15 @@ include::./common_docinfo_vars.adoc[]
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // document
 // -
-:title: Title
-:subtitle: Subtitle
+:title: Multi-tenancy with Clastix Kamaji
+:subtitle: Enable Efficient Kubernetes Cluster Isolation
 
-:product1: Primary SUSE product/platform short name (abbreviation)
-:product1_full: Primary SUSE product/platform full name
+:product1: Rancher
+:product1_full: Rancher Prime by SUSE
 :product1_version: Primary SUSE product/platform relevant version or versions
 :product1_url: Primary SUSE product/platform URL (without the protocol)
-:product2: Secondary product short name
-:product2_full: Secondary product full name
+:product2: Kamaji
+:product2_full: Clastix Kamaji
 :product2_url: Secondary product URL
 
 :usecase: A few words to identify high level use case (e.g., Database-as-a-Service, edge analytics in healthcare, Kubernetes-native object storage)
@@ -64,14 +64,18 @@ include::./common_docinfo_vars.adoc[]
 // specify information about authors, editors, and others here,
 // then update docinfo file as appropriate
 // -
-:author1_firstname: first (given) name
-:author1_surname: surname
-:author1_jobtitle: job title
-:author1_orgname: organization affiliation
-//:author2_firstname: first (given) name
-//:author2_surname: surname
-//:author2_jobtitle: job title
-//:author2_orgname: organization affiliation
+:author1_firstname: Dario
+:author1_surname: Tranchitella
+:author1_jobtitle: Technical Advisor
+:author1_orgname: Clastix
+:author2_firstname: Dominic
+:author2_surname: Geeverghese
+:author2_jobtitle: Solutions Architect
+:author2_orgname: SUSE
+:author3_firstname: Terry
+:author3_surname: Smith
+:author3_jobtitle: Director, global partner solutions
+:author3_orgname: SUSE
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

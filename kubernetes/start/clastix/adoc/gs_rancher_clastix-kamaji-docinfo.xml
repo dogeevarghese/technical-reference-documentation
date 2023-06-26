@@ -35,6 +35,7 @@
 -->
 <productname>{product1}</productname>
 <meta name="platform">{product1_full}</meta>
+<meta name="platform">{product2_full}</meta>
 
 
 <!-- author metadata
@@ -52,6 +53,26 @@
     <affiliation>
       <jobtitle>{author1_jobtitle}</jobtitle>
       <orgname>{author1_orgname}</orgname>
+    </affiliation>
+  </author>
+  <author>
+    <personname>
+      <firstname>{author2_firstname}</firstname>
+      <surname>{author2_surname}</surname>
+    </personname>
+    <affiliation>
+      <jobtitle>{author2_jobtitle}</jobtitle>
+      <orgname>{author2_orgname}</orgname>
+    </affiliation>
+  </author>
+  <author>
+    <personname>
+      <firstname>{author3_firstname}</firstname>
+      <surname>{author3_surname}</surname>
+    </personname>
+    <affiliation>
+      <jobtitle>{author3_jobtitle}</jobtitle>
+      <orgname>{author3_orgname}</orgname>
     </affiliation>
   </author>
 </authorgroup>
@@ -105,10 +126,10 @@
 <cover role="logos">
   <mediaobject>
     <imageobject role="fo">
-      <imagedata fileref="suse.svg" width="5em"/>
+      <imagedata fileref="logo-lockup_suse+clastix_hor_lightbackground.svg" width="5em"/>
     </imageobject>
     <imageobject role="html">
-      <imagedata fileref="suse.svg" width="152px"/>
+      <imagedata fileref="logo-lockup_suse+clastix_hor_lightbackground.svg" width="152px"/>
     </imageobject>
   </mediaobject>
 </cover>
