@@ -48,15 +48,24 @@ include::./common_docinfo_vars.adoc[]
 
 :product1: Rancher
 :product1_full: Rancher Prime by SUSE
-:product1_version: Primary SUSE product/platform relevant version or versions
-:product1_url: Primary SUSE product/platform URL (without the protocol)
+:product1_version: 2.7.3
+:product1_url: https://www.suse.com/solutions/enterprise-container-management/#rancher-product
+:product1_url_docs: https://ranchermanager.docs.rancher.com
+:product1_url_github: https://github.com/rancher
+:product1_url_supportmatrix: https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-7-4/
 :product2: Kamaji
 :product2_full: Clastix Kamaji
-:product2_url: Secondary product URL
+:product2_url: https://clastix.io/kamaji
+:product2_url_github: https://github.com/clastix/kamaji
+:product2_url_partner: https://clastix.io/
+:product3: SLES
+:product3_full: SUSE Linux Enterprise Server
+:product3_url: https://www.suse.com/products/server/
 
-:usecase: A few words to identify high level use case (e.g., Database-as-a-Service, edge analytics in healthcare, Kubernetes-native object storage)
 
-:executive_summary: A brief statement of what this document provides (e.g., This document provides a brief introduction to implementing {usecase} with {product2_full} and {product1_full}.)
+:usecase: multi-tenancy for Kubernetes
+
+:executive_summary: Enable efficient and secure Kubernetes resource sharing by implementing {usecase} with {product2_full} and {product1_full}.
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -82,8 +91,8 @@ include::./common_docinfo_vars.adoc[]
 // miscellaneous
 // define any additional variables here for use within the document
 // -
-
-
+:rke2_url: https://docs.rke2.io/
+:k3s_url: https://k3s.io/
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -98,19 +107,28 @@ include::./common_docinfo_vars.adoc[]
 // This is could be the same as the executive summary.
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
+Efficiency, security, and cost savings are top concerns for most businesses.
+This becomes particularly important for large enterprises, who need to share Kubernetes infrastructure and resources between multiple teams, departments, or business units.
+These are also concerns for managed services providers, who offer Kubernetes-as-a-Service or leverage Kubernetes to deliver other services.
+
+Multi-tenancy enables different users or tenants to securely share Kubernetes resources, simplifying administration and reducing costs.
+Multi-tenancy is recognized as key to achieving these goals.
+Yet Kubernetes does not have first-class concepts of end users or tenants.
+
+image::logo-lockup_suse+clastix_hor_lightbackground.svg["SUSE | Clastix", scaledwidth="75%", align="center"]
 
 
-=== Motivation
+By integrating {product2_url}[Clastix Kamaji] into your {product1_url}[SUSE Rancher Prime] environment, you gain: 
 
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-// Provide a motivation for the document in 2-4 sentences to identify:
-//   - what the document is about
-//   - why it may be of interest to the reader (e.g., a use case)
-//   - what products are being highlighted
-// Include an approved SUSE | Partner logo lock-up if possible
-// Include any additional, relevant details
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+* highly scalable and high density Kubernetes control plane infrastructure. 
 
+* reduced operational overhead, yielding faster deployment, configuration, upgrades, and maintenance. 
+
+* consistent configurations across multiple tenants. 
+
+* distributed architectures across clouds, edge, and data center. 
+
+* hard multi-tenancy with strong security and isolation.
 
 
 === Scope
@@ -119,7 +137,7 @@ include::./common_docinfo_vars.adoc[]
 // Specify what this guide covers in no more than 2 sentences.
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-This guide will help you take the first steps to ...
+Learn how to deploy {product2_url}[Clastix Kamaji] into an existing Kubernetes cluster managed by {product1_url}[{product1_full}].
 
 
 === Audience
@@ -131,10 +149,12 @@ This guide will help you take the first steps to ...
 //   - required skills
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-This document is intended for ...
+Systems architects, platform engineers, administrators, and others seeking efficient operation of Kubernetes infrastructure through multi-tenancy and secure workload isolation will find this guide relevant.
+
+A basic understanding of Kubernetes and cluster management with {product1} are needed.
 
 
-== Prerequisites
+=== Prerequisites
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 // Identify minimum requirements (prerequisites) the reader
@@ -142,6 +162,64 @@ This document is intended for ...
 // - Link to existing resources whenever possible.
 // - Keep this section brief but elaborate as needed.
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+To perform the steps detailed in this guide, you need the following:
+
+* a {product1} by SUSE Kubernetes environment.
+//
++
+{product1} {product1_version} or later is recommended to support Rancher Extensions.
+//
++
+See {product1_url_docs}[{product1} Deployment Quick Start Guides] for more information on setting up your {product1} environment.
+
+* a Kubernetes cluster to be used as the {product2} Admin Cluster, managed by {product1}.
++
+--
+Any CNCF-certified Kubernetes cluster can be used, including {rke2_url}[RKE2] and {k3s_url}[K3s].
+
+This cluster should consist of a minimum of:
+
+* 3 control plane nodes.
+
+* 3 worker nodes.
+
+* a {product1_url_docs}/faq/container-network-interface-providers[container network interface] (CNI) module, such as Calico or Cilium.
+
+* a container storage interface (CSI) with a defined {product1_url_docs}/pages-for-subheaders/create-kubernetes-persistent-storage[StorageClass] for the tenant datastores.
++
+[TIP]
+====
+The {product1} {product1_url_github}/local-path-provisioner[Local Path Provisioner] is an option if a storage backend is not available.
+====
+
+--
+
+* a {product1_url_docs}/pages-for-subheaders/load-balancer-and-ingress-controller[load balancer], such as MetalLB or one provided by your cloud platform.
++
+[IMPORTANT]
+====
+The addresses provided by the load balancer must be accessible by the worker nodes of the tenant clusters as well as by tenant users.
+====
+
+* https://cert-manager.io/[Cert-Manager].
+//
++
+Kamaji takes advantage of dynamic admission control, such as validating and mutating webhook configurations.
+These webhooks are secured by the https://en.wikipedia.org/wiki/Transport_Layer_Security[TLS] cryptographic protocol, and the certificates are managed by cert-manager.
+
+* an arbitrary number of Linux systems to function as worker nodes for tenant workloads.
++
+--
+Worker nodes are where your tenants' containerized workloads run.
+They can be bare metal or virtual machines, on-premises or on any cloud provider.
+
+// TERRY: Resume here
+
+
+
+--
+
 
 
 

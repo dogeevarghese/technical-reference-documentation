@@ -126,7 +126,7 @@
 <cover role="logos">
   <mediaobject>
     <imageobject role="fo">
-      <imagedata fileref="logo-lockup_suse+clastix_hor_lightbackground.svg" width="5em"/>
+      <imagedata fileref="logo-lockup_suse+clastix_hor_lightbackground.svg" width="10em"/>
     </imageobject>
     <imageobject role="html">
       <imagedata fileref="logo-lockup_suse+clastix_hor_lightbackground.svg" width="152px"/>
