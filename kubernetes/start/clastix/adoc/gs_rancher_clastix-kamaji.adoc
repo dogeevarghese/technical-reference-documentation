@@ -270,8 +270,40 @@ They can be bare metal or virtual machines, on-premises or on any cloud provider
 // the same level as Installation.
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
+Installing the Kamaji Operator and Datastore
 
+Make sure that you have administrive permissions on the cluster you want to turn into Kamaji Admin cluster and check that you can access it through the Rancher UI or the command line interface.
 
+[NOTE]
+====
+As per current Rancher recommendations, do not install Kamaji on the local cluster where Rancher is running. Instead, use a dedicated downstream cluster.
+====
+
+Installing the Kamaji Operator and Datastore
+
+Install with Helm
+
+The preferred way to install the Kamaji operator is with the Helm chat.
+
+[source, bash]
+----
+helm repo add clastix https://clastix.github.io/charts
+helm repo update
+helm install kamaji clastix/kamaji -n kamaji-system --create-namespace
+----
+
+The Kamaji operator needs to access a datastore to save data of the tenants' clusters. The Kamaji Helm chart provides the installation of a basic, unmanaged etcd as datastore.
+
+[TIP]
+====
+It is highly recommended you install a managed datastore in production, such as https://cloudnative-pg.io/ [CloudNativePG], an open-source PostgreSQL distribution for Kubernetes. If you are hesitant about using PostgreSQL, the https://github.com/clastix/kamaji-etcd [kamaji-etcd] Helm chart sets up a multi-tenant etcd datastore running as a StatefulSet of three replicas.
+====
+
+Installing from Rancher
+
+Alternatively, the Kamaji Operator and the default datastore can be installed from the Rancher Apps Catalog.
+
+Navigate to Apps & Marketplace > Charts within the Rancher UI and search for “Kamaji”, then click on the Install
 
 
 == Demonstration
